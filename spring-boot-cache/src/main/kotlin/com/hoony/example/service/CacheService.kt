@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class CacheService {
 
 
-  @Cacheable(value = [CacheNames.META_DATA_SERVICE_GET_CATEGORY], key = "#root.methodName")
+  @Cacheable(value = [CacheNames.META_DATA_SERVICE_GET_CATEGORY], key = "#root.methodName", )
   fun getCategory() : List<CategoryDto> {
     println("getCategory")
     return mutableListOf(
