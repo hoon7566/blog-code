@@ -10,6 +10,7 @@ import javax.cache.configuration.MutableCacheEntryListenerConfiguration
 import javax.cache.configuration.MutableConfiguration
 import javax.cache.expiry.CreatedExpiryPolicy
 import javax.cache.expiry.Duration
+import javax.cache.expiry.ExpiryPolicy
 
 object CacheNames {
   const val META_DATA_SERVICE_GET_CATEGORY: String = "cacheservice.category"
@@ -22,7 +23,7 @@ data class CacheSetting(
 
 @EnableCaching
 @Configuration
-class CacheConfig {
+class CacheConfig : Log {
 
   @Bean
   fun customCacheManager( cacheSettings : List<CacheSetting>): CacheManager {
@@ -40,7 +41,24 @@ class CacheConfig {
       CacheNames.META_DATA_SERVICE_GET_CATEGORY,
       MutableConfiguration<Any, Any>()
         .setTypes(Any::class.java, Any::class.java)
-        .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration.ONE_MINUTE))
+        .setExpiryPolicyFactory {
+          object : ExpiryPolicy {
+            override fun getExpiryForCreation(): Duration {
+              logger.info("[getExpiryForCreation]")
+              return Duration.ONE_MINUTE
+            }
+
+            override fun getExpiryForAccess(): Duration {
+              logger.info("[getExpiryForAccess]")
+              return Duration.ONE_MINUTE
+            }
+
+            override fun getExpiryForUpdate(): Duration {
+              logger.info("[getExpiryForUpdate]")
+              return Duration.ONE_MINUTE
+            }
+          }
+        }
         .addCacheEntryListenerConfiguration( customCacheEntryListenerConfiguration )
         .setStoreByValue(true)
 //        .setReadThrough(true)

@@ -21,6 +21,7 @@ class CacheController(
     //100개의 thread 생성해서 실행한다.
     for (i in 1..100) {
       Thread {
+
         logger.info("Thread $i ${cacheService.getCategory()}")
       }.start()
     }
