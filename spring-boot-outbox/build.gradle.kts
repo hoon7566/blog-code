@@ -28,6 +28,19 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    //integration
+    implementation("org.springframework.boot:spring-boot-starter-integration")
+
+    // spring integration to jpa
+    implementation("org.springframework.integration:spring-integration-jpa")
+        //jpa
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+
+    //mysql
+    runtimeOnly("mysql:mysql-connector-java:8.0.27")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
