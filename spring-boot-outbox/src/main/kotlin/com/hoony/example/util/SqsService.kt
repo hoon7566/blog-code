@@ -1,42 +1,37 @@
-package com.hoony.example.service
+package com.hoony.example.util
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.hoony.example.config.Log
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.sqs.SqsClient
 import software.amazon.awssdk.services.sqs.model.GetQueueUrlRequest
-import software.amazon.awssdk.services.sqs.model.ListQueuesRequest
+import software.amazon.awssdk.services.sqs.model.Message
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 
-
-@Service
-class TestService(
+@Component
+class SqsService(
   private val sqsClient: SqsClient
 ): Log {
 
-  fun sendSqsMessage() {
-    logger.info("sendSqsMessage called")
-    val queueName = "my-queue"
+  fun sendSqsMessage(queueName: String, message: Any) {
 
     val getQueueRequest = GetQueueUrlRequest.builder()
       .queueName(queueName)
       .build()
 
     val queueUrl: String = sqsClient.getQueueUrl(getQueueRequest).queueUrl()
+
     val sendMsgRequest = SendMessageRequest.builder()
       .queueUrl(queueUrl)
-      .messageBody("hoony message")
-      .delaySeconds(5)
+      .messageBody(ObjectMapper().writeValueAsString(message))
+      .delaySeconds(1)
       .build()
 
     sqsClient.sendMessage(sendMsgRequest)
-    sqsClient.close()
-
   }
 
-  fun getSqsMessage(){
-    logger.info("get sqsMessage called")
-    val queueName = "my-queue"
+  fun getSqsMessage(queueName: String) : List<Message> {
     val getQueueRequest = GetQueueUrlRequest.builder()
       .queueName(queueName)
       .build()
@@ -48,10 +43,7 @@ class TestService(
       .maxNumberOfMessages(5)
       .build()
 
-    sqsClient.receiveMessage(receiveMessageRequest).messages().forEach {
-      logger.info(it.body())
-    }
+    return sqsClient.receiveMessage(receiveMessageRequest).messages()
+
   }
-
-
 }

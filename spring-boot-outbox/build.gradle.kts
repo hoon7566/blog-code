@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.jpa") version "1.6.21"
+    kotlin("kapt") version "1.6.21"
 }
 
 group = "com.hoony"
@@ -17,6 +19,13 @@ java {
 repositories {
     mavenCentral()
 }
+
+apply(plugin = "org.springframework.boot")
+apply(plugin = "io.spring.dependency-management")
+apply(plugin = "org.jetbrains.kotlin.jvm")
+apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
+apply(plugin = "org.jetbrains.kotlin.kapt")
 
 dependencies {
 
