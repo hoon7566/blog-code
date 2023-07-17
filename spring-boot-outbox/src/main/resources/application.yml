@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://129.154.192.255:3306/quant?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&profileSQL=true
+    url: jdbc:mysql://999.999.999.999/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&profileSQL=true
     username: username
     password: password
     driver-class-name: "com.mysql.cj.jdbc.Driver"
