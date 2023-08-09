@@ -33,8 +33,8 @@ class ExceptionHandler(
 
     fun renderErrorResponse(request: ServerRequest, errorAttributes: ErrorAttributes): Mono<ServerResponse> {
         val errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults())
-
-        val errorResponse = if (errorAttributes.getError(request) is CustomException) {
+        val getException = errorAttributes.getError(request)
+        val errorResponse = if ( getException is CustomException) {
             ErrorResponse(
                 status = 500,
                 message = "UnHandledException",
@@ -42,6 +42,7 @@ class ExceptionHandler(
                 requestId = errorPropertiesMap["requestId"] as? String ?: "",
             )
         } else {
+            logger.error("UnHandledException {}, {}", getException.message, getException.stackTraceToString())
             ErrorResponse(
                 errorPropertiesMap["status"] as? Int ?: 500,
                 errorPropertiesMap["error"] as? String,
