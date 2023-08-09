@@ -1,0 +1,5 @@
+spring:
+    r2dbc:
+        url: r2dbc:mysql://localhost:13306/hoon7566
+        username: root
+        password: root

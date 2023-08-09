@@ -2,7 +2,7 @@ package com.hoony.coroutinewebflux.controller
 
 import com.hoony.coroutinewebflux.config.Log
 import com.hoony.coroutinewebflux.service.PostService
-import kotlinx.coroutines.*
+import kotlinx.coroutines.coroutineScope
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
