@@ -14,6 +14,14 @@ class ItemService(
         itemRepository.findAll()
     }
 
+    suspend fun getItemByCategoryCode(categoryCode: String) = coroutineScope{
+        itemRepository.findByCategoryCode(categoryCode)
+    }
+
+    suspend fun getItemByItemName(itemName: String) = coroutineScope{
+        itemRepository.findByItemName(itemName)
+    }
+
     suspend fun getItemById(id: Long) = coroutineScope{
         itemRepository.findById(id)
     }

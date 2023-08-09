@@ -18,4 +18,10 @@ class ItemController(
 
     @GetMapping("/{id}")
     suspend fun getItemById( @PathVariable id: Long) = coroutineScope { itemService.getItemById(id) }
+
+    @GetMapping("/category/{categoryCode}")
+    suspend fun getItemByCategoryCode( @PathVariable categoryCode: String) = coroutineScope { itemService.getItemByCategoryCode(categoryCode) }
+
+    @GetMapping("/name/{itemName}")
+    suspend fun getItemByItemName( @PathVariable itemName: String) = coroutineScope { itemService.getItemByItemName(itemName) }
 }
